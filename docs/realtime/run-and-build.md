@@ -23,15 +23,14 @@ Output directory: `outputs/route2_clips/{timestamp}/`
 
 ## First-time build
 
+The clone already has the n-pose FP16 engines, aarch64 `.so`, and `calib/stereo_sbs.json`. Rebuild only if those do not load:
+
 ```bash
 bash scripts/route2/download_yolo26_pose_onnx.sh
 bash scripts/route2/build_yolo26_pose_trt.sh
 bash scripts/route2/build_cuda_nv12_rgb.sh
-# optional GL preview library
 bash scripts/route2/build_gl_display.sh
 ```
-
-Put `calib/stereo_sbs.json` in place (see `calib/README.md`).
 
 ## Flags
 

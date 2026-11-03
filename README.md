@@ -15,33 +15,32 @@ Display is optional and does not have to wait for pose.
 
 ## Requirements
 
-NVIDIA Jetson with JetPack (GStreamer NVMM, VIC, TensorRT). Python 3.10. A stereo calibration file for your cameras.
+NVIDIA Jetson with JetPack (GStreamer NVMM, VIC, TensorRT). Python 3.10. SBS camera on `/dev/video0`.
 
-## Setup
+The repo already contains:
 
-```bash
-cd stereo-pose-pipeline
-export PYTHONPATH="$(pwd)"
-
-# 1. Weights (Ultralytics YOLO26n-pose) → ONNX → TensorRT
-bash scripts/route2/download_yolo26_pose_onnx.sh
-bash scripts/route2/build_yolo26_pose_trt.sh
-
-# 2. CUDA preprocess library (if not using the bundled aarch64 .so)
-bash scripts/route2/build_cuda_nv12_rgb.sh
-
-# 3. Your stereo calibration
-#    copy or write calib/stereo_sbs.json  (see calib/README.md)
-```
+- `models/yolo26_pose/yolo26n-pose_fp16.trt` (and the batch-2 engine)
+- `build/route2/*.so` for aarch64
+- `calib/stereo_sbs.json` for a 1920×1080 per-eye stereo pair (replace if your cameras differ)
 
 ## Run
 
 ```bash
+cd stereo-pose-pipeline
+export PYTHONPATH="$(pwd)"
 export DISPLAY=:0
 bash scripts/route2/run_camera_pose3d.sh
 ```
 
 Quit with `q`. Sessions land in `outputs/route2_clips/<timestamp>/`.
+
+Rebuild the CUDA library only if the bundled `.so` does not load:
+
+```bash
+bash scripts/route2/build_cuda_nv12_rgb.sh
+```
+
+Rebuild the engine (optional) with `scripts/route2/download_yolo26_pose_onnx.sh` then `build_yolo26_pose_trt.sh`. Engines are TensorRT plans for this Jetson class; another GPU family needs a rebuild.
 
 Useful flags (passed through to `python3 -m app.route2.main`):
 

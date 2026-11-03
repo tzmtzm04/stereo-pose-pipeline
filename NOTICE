@@ -8,9 +8,9 @@ Runtime / tools
 - NVIDIA CUDA, TensorRT, GStreamer NVMM, NvBuf/VIC: NVIDIA SDKs
 - OpenCV: Apache-2.0
 - NumPy: BSD
-- Ultralytics YOLO26-pose weights and export: see Ultralytics license
-  (https://github.com/ultralytics/ultralytics). Download via
-  scripts/route2/download_yolo26_pose_onnx.sh; do not commit .pt/.onnx/.trt.
+- Ultralytics YOLO26-pose: see Ultralytics license
+  (https://github.com/ultralytics/ultralytics). This repo ships TensorRT
+  engines built from YOLO26n-pose for Jetson; .pt is not included.
 
 Numerical references (not copied into this repository)
 - Ultralytics LetterBox / OpenCV INTER_LINEAR geometry
