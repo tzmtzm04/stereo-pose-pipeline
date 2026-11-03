@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.so
+*.trt
+*.engine
+*.onnx
+.env
+.venv/
+outputs/
+*.mjpeg
+*.jsonl
+calib/private/
+.DS_Store

@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: stereo-pose-pipeline
+message: Paper in preparation. Cite this repository until a preprint is available.
+type: software
+license: Apache-2.0
+repository-code: https://github.com/tzmtzm04/stereo-pose-pipeline
+abstract: Real-time binocular 3D human pose from a side-by-side video stream, with CPU-aligned GPU letterbox and overlapped dual-eye inference.
+keywords:
+  - stereo
+  - human pose
+  - triangulation
+  - realtime
+  - jetson
