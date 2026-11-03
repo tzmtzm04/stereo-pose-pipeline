@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "route2_clip_meta",
+  "title": "Route2 L4 NV12 Persist Meta",
+  "type": "object",
+  "required": [
+    "type",
+    "ring_mode",
+    "pixel_format",
+    "width",
+    "height",
+    "bytes_per_frame",
+    "frame_count",
+    "fps_nominal",
+    "requested_start_capture_seq",
+    "requested_end_capture_seq",
+    "actual_start_capture_seq",
+    "actual_end_capture_seq",
+    "persisted_at"
+  ],
+  "properties": {
+    "type": { "const": "route2_l4_nv12_persist" },
+    "ring_mode": {
+      "type": "string",
+      "enum": ["raw_nv12_memory", "session_h264_grab", "session_h264_tee"]
+    },
+    "pixel_format": { "const": "NV12" },
+    "nv12": { "type": "string" },
+    "clip_index": { "type": "integer", "minimum": 0 },
+    "clip_label": { "type": ["string", "null"] },
+    "width": { "type": "integer", "minimum": 1 },
+    "height": { "type": "integer", "minimum": 1 },
+    "bytes_per_frame": { "type": "integer", "minimum": 1 },
+    "frame_count": { "type": "integer", "minimum": 1 },
+    "fps_nominal": { "type": "integer", "minimum": 1 },
+    "requested_start_capture_seq": { "type": "integer", "minimum": 0 },
+    "requested_end_capture_seq": { "type": "integer", "minimum": 0 },
+    "actual_start_capture_seq": { "type": "integer", "minimum": 0 },
+    "actual_end_capture_seq": { "type": "integer", "minimum": 0 },
+    "capture_seq_list": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 }
+    },
+    "device": { "type": "string" },
+    "calib": { "type": "string" },
+    "capture": { "type": "string" },
+    "session_id": { "type": "string" },
+    "persisted_at": { "type": "string" },
+    "sha256": { "type": "string" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "route2_clips_manifest_line",
+  "title": "Route2 Clips Manifest Line",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["type", "status", "index", "start_capture_seq", "end_capture_seq", "ts"],
+      "properties": {
+        "type": { "const": "segment" },
+        "status": { "enum": ["detected"] },
+        "index": { "type": "integer", "minimum": 0 },
+        "start_capture_seq": { "type": "integer", "minimum": 0 },
+        "end_capture_seq": { "type": "integer", "minimum": 0 },
+        "label": { "type": ["string", "null"] },
+        "ts": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    {
+      "type": "object",
+      "required": ["type", "index", "capture_seq", "ts"],
+      "properties": {
+        "type": { "const": "marker" },
+        "index": { "type": "integer", "minimum": 0 },
+        "capture_seq": { "type": "integer", "minimum": 0 },
+        "kind": { "type": "string" },
+        "label": { "type": ["string", "null"] },
+        "ts": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    {
+      "type": "object",
+      "required": ["type", "index", "start_capture_seq", "end_capture_seq", "status", "ts"],
+      "properties": {
+        "type": { "const": "persist" },
+        "index": { "type": "integer", "minimum": 0 },
+        "start_capture_seq": { "type": "integer", "minimum": 0 },
+        "end_capture_seq": { "type": "integer", "minimum": 0 },
+        "status": {
+          "enum": ["persisting", "persisted", "failed", "processing", "l2_done", "l2_failed"]
+        },
+        "nv12": { "type": "string" },
+        "meta": { "type": "string" },
+        "error": { "type": "string" },
+        "ts": { "type": "number" }
+      },
+      "additionalProperties": true
+    }
+  ]
+}

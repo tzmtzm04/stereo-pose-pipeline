@@ -1,25 +1,59 @@
 # stereo-pose-pipeline
 
-Real-time **binocular 3D human pose** on a single side-by-side (SBS) video stream.
+Real-time binocular 3D human pose from one side-by-side (SBS) camera stream.
 
-This repository is a public placeholder for a system paper in preparation. Code for the extractable core (OpenCV-aligned GPU letterbox, dual-eye inference overlap, triangulation) will land here. Sports scoring, venue calibration, and private recordings stay out.
+This is **v0.99**: a runnable Jetson snapshot. Each eye keeps the highest-confidence person (no identity tracking). A paper is in preparation; this tree is the software, not a results dump.
 
-## Scope
+## What it does
 
-Input is one NV12 SBS frame (left | right). Output is COCO-17 keypoints in **original-image coordinates** per eye, then a triangulated 3D skeleton. Capture, preprocess, infer, and display run on separate threads. Display does not sit on the pose critical path.
+- Capture 3840×1080 NV12 SBS at 60 Hz (left 1920 + right 1920)
+- VIC crop per eye (optional 90° mount rotate), letterbox, dual-eye TensorRT YOLO26-pose
+- Emit COCO-17 keypoints in original-image coordinates and triangulated 3D
+- Write a session bundle: `session.mjpeg`, `session_index.jsonl`, `session_pose.jsonl`, `session_meta.json`
 
-**Intended claims (system, not a new detector):**
+Display is optional and does not have to wait for pose.
 
-- Pipeline overlap: VIC→BGR then GPU letterbox on a prep thread, dual-eye TensorRT on an infer thread, one staging buffer because CUDA graphs pin the input pointer.
-- Preprocess matches the CPU reference (`cv2.resize` INTER_LINEAR / Ultralytics LetterBox) on the same BGR image. Direct NV12 letterbox is a contrast path, not the accuracy path.
-- Left and right engines run in parallel. Portrait mount is the same geometry with crop+rotate in one VIC pass.
+## Requirements
 
-GPU letterbox that matches OpenCV is **not** claimed as original. See [TensorRT-YOLO](https://github.com/laugh12321/TensorRT-YOLO) and [CV-CUDA #45](https://github.com/CVCUDA/CV-CUDA/issues/45). This project applies that constraint on BGR after hardware demosaic/crop.
+NVIDIA Jetson with JetPack (GStreamer NVMM, VIC, TensorRT). Python 3.10. A stereo calibration file for your cameras.
 
-## Status
+## Setup
 
-Work in progress. Cite this repository until the preprint is up (`CITATION.cff`).
+```bash
+cd stereo-pose-pipeline
+export PYTHONPATH="$(pwd)"
+
+# 1. Weights (Ultralytics YOLO26n-pose) → ONNX → TensorRT
+bash scripts/route2/download_yolo26_pose_onnx.sh
+bash scripts/route2/build_yolo26_pose_trt.sh
+
+# 2. CUDA preprocess library (if not using the bundled aarch64 .so)
+bash scripts/route2/build_cuda_nv12_rgb.sh
+
+# 3. Your stereo calibration
+#    copy or write calib/stereo_sbs.json  (see calib/README.md)
+```
+
+## Run
+
+```bash
+export DISPLAY=:0
+bash scripts/route2/run_camera_pose3d.sh
+```
+
+Quit with `q`. Sessions land in `outputs/route2_clips/<timestamp>/`.
+
+Useful flags (passed through to `python3 -m app.route2.main`):
+
+| Flag | Meaning |
+|------|---------|
+| `--no-display` | Headless capture + infer |
+| `--eye-rotate cw90` / `ccw90` | Portrait mount |
+| `--calib PATH` | Calibration JSON |
+| `--engine PATH` | TensorRT engine |
+
+SDK: `from app.sdk import RealtimeSession`. Session files: `docs/realtime/session-output.md`.
 
 ## License
 
-Apache-2.0.
+Apache-2.0. Third-party notices: `NOTICE`.

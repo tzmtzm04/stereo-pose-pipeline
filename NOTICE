@@ -1,0 +1,20 @@
+stereo-pose-pipeline
+Apache-2.0
+
+This tree does not vendor third-party sources listed below. Install them as
+runtime dependencies and follow their licenses.
+
+Runtime / tools
+- NVIDIA CUDA, TensorRT, GStreamer NVMM, NvBuf/VIC: NVIDIA SDKs
+- OpenCV: Apache-2.0
+- NumPy: BSD
+- Ultralytics YOLO26-pose weights and export: see Ultralytics license
+  (https://github.com/ultralytics/ultralytics). Download via
+  scripts/route2/download_yolo26_pose_onnx.sh; do not commit .pt/.onnx/.trt.
+
+Numerical references (not copied into this repository)
+- Ultralytics LetterBox / OpenCV INTER_LINEAR geometry
+- Geekgineer/YOLOs-CPP getScalePad and postprocessV26 (AGPL-3.0 upstream;
+  this project reimplements the mapping in Python/CUDA)
+
+COCO-17 keypoint layout is used as the skeleton convention.
