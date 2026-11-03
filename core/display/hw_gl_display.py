@@ -19,9 +19,9 @@ def hw_gl_display_available() -> bool:
 
 def create_hw_gl_display(cfg: Route2SessionConfig) -> Nv12GlDisplay:
     w, h = resolve_display_size(cfg)
-    # fall_risk：屏外创建+map，后台 swap 预热，绝不在 (0,0) 闪窗
-    kiosk = bool(getattr(cfg, "embedded_preview", False))
-    if kiosk:
+    # 嵌入预览：屏外创建+map，后台 swap 预热，绝不在 (0,0) 闪窗
+    embed = bool(getattr(cfg, "embedded_preview", False))
+    if embed:
         return Nv12GlDisplay(
             title=DISPLAY_WINDOW,
             width=w,

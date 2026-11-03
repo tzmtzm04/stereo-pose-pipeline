@@ -191,12 +191,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--clip-dir", type=Path, default=None)
     parser.add_argument("--no-mock-l3-detect", action="store_true")
     parser.add_argument("--mock-compute-delay-sec", type=float, default=0.5)
-    parser.add_argument("--fall-risk-kiosk", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--cpu-jpeg-preview", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument(
         "--no-c2-auto-stop",
         action="store_true",
-        help="关闭 C2 髋角切段自动停录（默认开启）",
+        help=argparse.SUPPRESS,
     )
     parser.add_argument(
         "--eye-rotate",

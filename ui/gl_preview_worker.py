@@ -109,7 +109,7 @@ def run_ui_gl_preview_worker(
     _embed_log_seq = -1
     try:
         while not quit_evt.is_set() and not stop.is_set():
-            # fall_risk：Host 只排队几何，必须在本线程（持 Display）执行 X11
+            # 嵌入预览：Host 只排队几何，必须在本线程（持 Display）执行 X11
             if cfg.embedded_preview and gl is not None:
                 if gl.apply_pending_embed():
                     gx, gy, gw, gh = gl.window_geometry()
@@ -117,7 +117,7 @@ def run_ui_gl_preview_worker(
                         _embed_log_seq = gl.applied_embed_seq
                         mode = gl.embed_mode
                         print(
-                            f"fall_risk ui mode={mode} geom={gw}x{gh}+{gx}+{gy} "
+                            f"embed ui mode={mode} geom={gw}x{gh}+{gx}+{gy} "
                             f"renders_since_geom={gl.renders_since_geom}",
                             flush=True,
                         )
@@ -457,7 +457,7 @@ def _render_gl_tick(
     pose_seq = pose.capture_seq if pose is not None else -1
     seq_lag = capture_seq - int(pose_seq) if pose is not None else -1
     tri_ok = pose.tri_ok if pose is not None else False
-    # kiosk 嵌套：每帧 XDrawString 状态栏也是 X11，关掉以稳住 ui_fps
+    # 嵌入预览：每帧 XDrawString 状态栏也是 X11，关掉以稳住 ui_fps
     if cfg.embedded_preview:
         if ui_idx == 0:
             gl.set_status("")

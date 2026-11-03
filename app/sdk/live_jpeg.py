@@ -29,7 +29,6 @@ from core.geometry.eye_mount_rotate import apply_eye_mount_rotate, parse_eye_mou
 __all__ = [
     "LatestJpegSlot",
     "run_cpu_jpeg_embed_ui_worker",
-    "run_fall_risk_embed_ui_worker",
 ]
 
 
@@ -170,10 +169,6 @@ def run_cpu_jpeg_embed_ui_worker(
         f"cpu_jpeg embed UI 结束 published={published} overlay_hits={overlay_hits}",
         flush=True,
     )
-
-
-# 兼容旧名（Host fall_risk 曾用）
-run_fall_risk_embed_ui_worker = run_cpu_jpeg_embed_ui_worker
 
 
 def _pick_pose_in_ring(

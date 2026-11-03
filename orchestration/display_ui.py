@@ -27,7 +27,7 @@ _window_size: tuple[int, int] | None = None
 _vis_buffer: np.ndarray | None = None
 _status_bar_fill = np.uint8(24)
 _placeholder: np.ndarray | None = None
-# fall_risk 嵌套：无状态条、初始屏外、尽量置顶（盖住 Firefox kiosk）
+# 嵌入预览：无状态条、初始屏外、尽量置顶
 _embedded_preview_mode = False
 _STAGING_ORIGIN = (-8192, -8192)
 # Host 只排队几何；必须在 UI 线程 apply（OpenCV 非线程安全）
@@ -42,7 +42,7 @@ def set_embedded_preview_mode(enabled: bool) -> None:
 
 
 def embedded_canvas_size() -> tuple[int, int] | None:
-    """kiosk 已贴洞时返回洞尺寸；否则 None（仍用 cfg.display_*）。"""
+    """嵌入预览贴洞后返回洞尺寸；否则 None（仍用 cfg.display_*）。"""
     if not _embedded_preview_mode:
         return None
     emb = _applied_embed
@@ -108,7 +108,7 @@ def apply_pending_display_embed() -> bool:
     if _applied_embed == key:
         return False
     try:
-        # Qt TOPMOST 压不住 Firefox --kiosk；用 X11 override_redirect（同 GL 嵌套）
+        # 全屏宿主窗可能压住普通 TOPMOST；用 X11 override_redirect（同 GL 嵌套）
         from platform.jetson.x11_overlay import place_override_redirect
 
         ok = place_override_redirect(
@@ -128,8 +128,8 @@ def apply_pending_display_embed() -> bool:
         if not _embed_x11_logged and mapped:
             _embed_x11_logged = True
             print(
-                f"fall_risk OpenCV 窗 X11 override_redirect "
-                f"{w}x{h}+{x}+{y}（盖住 Firefox kiosk）",
+                f"embed OpenCV window X11 override_redirect "
+                f"{w}x{h}+{x}+{y}",
                 flush=True,
             )
         _window_size = (w, h)
@@ -410,7 +410,7 @@ def show_frame(
     """返回 True 表示用户按 q 退出。"""
     ch, cw = composite.shape[:2]
     if _embedded_preview_mode:
-        # kiosk 洞内：无状态条，少一次缓冲拷贝
+        # 嵌入洞内：无状态条，少一次缓冲拷贝
         _ensure_window(cw, ch)
         cv2.imshow(DISPLAY_WINDOW, composite)
     else:

@@ -117,7 +117,7 @@ def run_ui_preview_worker(
         )
     try:
         while not quit_evt.is_set() and not stop.is_set():
-            # fall_risk 嵌套：Host 排队的几何必须在本线程 Apply
+            # 嵌入预览：Host 排队的几何必须在本线程 Apply
             if cfg.embedded_preview:
                 apply_pending_display_embed()
 

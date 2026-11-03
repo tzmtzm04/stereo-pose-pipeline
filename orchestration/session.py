@@ -547,7 +547,7 @@ class Route2LiveSession:
                         algo_segs,
                     )
                     print(
-                        f"C2 auto-stop finalize: segments={len(result.motion_segments)} "
+                        f"auto-stop finalize: segments={len(result.motion_segments)} "
                         f"→ {result.motion_segments_json}",
                         flush=True,
                     )
@@ -730,7 +730,7 @@ def _print_banner(cfg, calib, l3, l1, mode, metrics_fp) -> None:
     )
     if cfg.c2_auto_stop and cfg.split_display:
         print(
-            "  C2: 髋角切段 auto-stop（infer 写 pose 时同步分析 → 停录）",
+            "  pose-gated auto-stop on",
             flush=True,
         )
     if metrics_fp is not None:

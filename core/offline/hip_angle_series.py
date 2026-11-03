@@ -1,4 +1,4 @@
-"""COCO-17 髋角（肩-髋-膝）序列：用于 C2 起立/坐下切段与预览。"""
+"""COCO-17 髋角（肩-髋-膝）序列，供预览。"""
 
 from __future__ import annotations
 

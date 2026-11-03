@@ -13,7 +13,7 @@ from app.paths import ROOT
 _lib: ctypes.CDLL | None = None
 _lib_path: Path | None = None
 
-# kiosk 屏外预热坐标（eglSwap 需要 map，但不能出现在可见桌面）
+# 嵌入预览屏外预热坐标（eglSwap 需要 map，但不能出现在可见桌面）
 STAGING_ORIGIN_X = -8192
 STAGING_ORIGIN_Y = -8192
 
@@ -389,7 +389,7 @@ class Nv12GlDisplay:
         )
 
     def set_window_position(self, x: int, y: int) -> None:
-        """移动 X11 窗口（kiosk 对齐手机壳内屏）。"""
+        """移动 X11 窗口（对齐嵌入区域）。"""
         _load().route2_gl_display_set_window_position(
             self._handle,
             int(x),
@@ -397,7 +397,7 @@ class Nv12GlDisplay:
         )
 
     def set_window_geometry(self, x: int, y: int, width: int, height: int) -> None:
-        """原子 move+resize（嵌套手机壳黑框）。"""
+        """原子 move+resize（嵌入区域）。"""
         _load().route2_gl_display_set_window_geometry(
             self._handle,
             int(x),
@@ -428,14 +428,14 @@ class Nv12GlDisplay:
         )
 
     def set_override_redirect(self, enabled: bool) -> None:
-        """绕过 WM：盖过 Firefox kiosk 全屏（会先 unmap）。"""
+        """绕过 WM：盖过全屏宿主窗（会先 unmap）。"""
         _load().route2_gl_display_set_override_redirect(
             self._handle,
             1 if enabled else 0,
         )
 
     def set_window_above(self, above: bool) -> None:
-        """置顶 / 取消置顶（盖过 Firefox kiosk 全屏）。"""
+        """置顶 / 取消置顶。"""
         _load().route2_gl_display_set_window_above(
             self._handle,
             1 if above else 0,

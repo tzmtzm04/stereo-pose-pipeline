@@ -250,7 +250,7 @@ class EmbeddedPreview:
         self._opencv_target = None
 
     def request_realign(self) -> None:
-        """C1→C2 等同 vision 内换页：保持实况；仅当矩形真变才改窗。"""
+        """换页时保持实况；仅当矩形真变才改窗。"""
         self._realign_requested = True
 
     def hide(self) -> None:

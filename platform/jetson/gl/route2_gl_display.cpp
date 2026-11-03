@@ -563,7 +563,7 @@ int route2_gl_display_available(void) {
 static void ensure_x_threads() {
     static bool inited = false;
     if (!inited) {
-        // Host(kiosk) 与 UI 线程都会碰 X11；必须先开多线程
+        // Host 与 UI 线程都会碰 X11；必须先开多线程
         XInitThreads();
         inited = true;
     }
@@ -599,7 +599,7 @@ Route2GlDisplay* route2_gl_display_create_ex(const char* title, int width,
     attrs.event_mask = ExposureMask | KeyPressMask | StructureNotifyMask |
                        ButtonPressMask | ButtonReleaseMask | ButtonMotionMask;
 
-    // origin 可放屏外（kiosk 预热），避免 eglSwap 把未定位窗弹到 (0,0)
+    // origin 可放屏外（嵌入预览预热），避免 eglSwap 把未定位窗弹到 (0,0)
     d->x_window = XCreateWindow(
         d->x_display, DefaultRootWindow(d->x_display), origin_x, origin_y,
         d->win_w, d->win_h, 0, DefaultDepth(d->x_display, screen), InputOutput,
@@ -876,7 +876,7 @@ void route2_gl_display_set_window_mapped(Route2GlDisplay* d, int mapped) {
 }
 
 void route2_gl_display_set_override_redirect(Route2GlDisplay* d, int enabled) {
-    // 绕过 WM 层叠：盖过 Firefox --kiosk 全屏（需在 unmap 状态下改）
+    // 绕过 WM 层叠：盖过全屏宿主窗（需在 unmap 状态下改）
     if (!d || !d->x_display || !d->x_window) {
         return;
     }

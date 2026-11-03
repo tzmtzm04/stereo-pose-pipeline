@@ -213,7 +213,7 @@ def compose_display_frame(
 ) -> np.ndarray:
     """原始 BGR + 可选 pose → 适配窗口尺寸的 composite（未含状态栏）。
 
-    fill: \"fit\" 留边；\"cover\" 铺满裁切（kiosk 嵌洞用，避免外围灰框）。
+    fill: \"fit\" 留边；\"cover\" 铺满裁切（嵌入贴洞用，避免外围灰框）。
     """
     if out_size is not None:
         cw, ch = int(out_size[0]), int(out_size[1])

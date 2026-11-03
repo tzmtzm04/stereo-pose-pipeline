@@ -68,7 +68,7 @@ class Route2SessionConfig:
     infer_stereo_letterbox_fused: bool = True
     embedded_preview: bool = False
     cpu_jpeg_preview: bool = False
-    c2_auto_stop: bool = True
+    c2_auto_stop: bool = False
     # VIC 裁眼后旋转：none|cw90|ccw90（竖装左上右下默认用 cw90，见 VISION_EYE_ROTATE）
     eye_rotate: str = "none"
 
@@ -164,10 +164,7 @@ class Route2SessionConfig:
             display_cuda_crop=bool(args.display_cuda_crop),
             infer_pipeline_overlap=bool(args.infer_pipeline_overlap),
             infer_stereo_letterbox_fused=bool(args.infer_stereo_letterbox_fused),
-            embedded_preview=bool(
-                getattr(args, "embedded_preview", False)
-                or getattr(args, "fall_risk_kiosk", False)
-            ),
+            embedded_preview=bool(getattr(args, "embedded_preview", False)),
             cpu_jpeg_preview=bool(getattr(args, "cpu_jpeg_preview", False)),
             c2_auto_stop=not bool(getattr(args, "no_c2_auto_stop", False)),
             eye_rotate=str(getattr(args, "eye_rotate", "none") or "none"),

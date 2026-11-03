@@ -53,15 +53,17 @@ def run_pipeline_loop(
     quit_evt = threading.Event()
     c2_gate = None
     if cfg.c2_auto_stop and cfg.split_display:
-        # 惰性导入：独立 blackbox 包默认 no_c2_auto_stop，不依赖 fall_risk
-        from orchestration.c2_auto_stop import C2AutoStopGate
-
-        c2_gate = C2AutoStopGate(
-            fps=float(cfg.fps),
-            session_dir=session_dir,
-            stop=stop,
-            quit_evt=quit_evt,
-        )
+        try:
+            from orchestration.c2_auto_stop import C2AutoStopGate
+        except ImportError:
+            C2AutoStopGate = None  # type: ignore[misc, assignment]
+        if C2AutoStopGate is not None:
+            c2_gate = C2AutoStopGate(
+                fps=float(cfg.fps),
+                session_dir=session_dir,
+                stop=stop,
+                quit_evt=quit_evt,
+            )
     max_frames = max(0, int(cfg.max_frames))
     frames_done = {"n": 0}
     frames_lock = threading.Lock()

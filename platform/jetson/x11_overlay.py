@@ -1,6 +1,6 @@
 """把已有 X11 窗（如 OpenCV Qt）改成 override_redirect 并贴到指定矩形。
 
-Firefox --kiosk 会压住普通 TOPMOST 窗；Route2 GL 嵌套用的就是 override_redirect。
+全屏宿主窗可能压住普通 TOPMOST；嵌入 GL 预览用 override_redirect。
 """
 
 from __future__ import annotations
@@ -201,7 +201,7 @@ def place_override_redirect(
     *,
     mapped: bool = True,
 ) -> bool:
-    """按 WM_NAME 找到窗，reparent+override_redirect 并 MoveResize（盖住 kiosk）。"""
+    """按 WM_NAME 找到窗，reparent+override_redirect 并 MoveResize。"""
     lib = _libx11()
     disp_name = os.environ.get("DISPLAY", ":0").encode("utf-8")
     dpy = lib.XOpenDisplay(disp_name)

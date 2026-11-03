@@ -76,10 +76,10 @@ def run_split_display_worker(
     if use_gl:
         ring_frames = DEFAULT_DISPLAY_VIDEO_RING_FRAMES_NV12
     elif cfg.cpu_jpeg_preview:
-        # kiosk JPEG 12fps：ring 太浅时 pose 落后会被挤掉 → 叠不上/追赶空转
+        # 嵌入 JPEG：ring 太浅时 pose 落后会被挤掉 → 叠不上/追赶空转
         ring_frames = 24
     elif cfg.embedded_preview:
-        # kiosk OpenCV 窗贴洞：短环 + UI 跳最新 exact 对
+        # 嵌入 OpenCV 窗贴洞：短环 + UI 跳最新 exact 对
         ring_frames = 8
     else:
         ring_frames = max(DEFAULT_DISPLAY_VIDEO_RING_FRAMES, slot_depth * 8)

@@ -1,6 +1,6 @@
 """3D 关键点卡尔曼平滑（髋部锚定 + 相对坐标 + 输出 EMA）。
 
-对齐 BodPoesNet/src/stereo/kalman_pose3d.py：三角化后逐帧调用。
+三角化后逐帧调用。
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-"""最新 JPEG 帧槽（SDK 内，供预览参考；无 fall_risk 依赖）。"""
+"""最新 JPEG 帧槽（SDK 内，供预览参考）。"""
 
 from __future__ import annotations
 
