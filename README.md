@@ -4,7 +4,7 @@ Real-time binocular 3D human pose from one side-by-side (SBS) camera stream.
 
 This is **v0.99**: a runnable Jetson snapshot. Each eye keeps the highest-confidence person (no identity tracking).
 
-The authors will publish a paper in 2027 and keep optimizing this pipeline. This tree is the usable software, not a results dump. Cite this repository until the preprint is up (`CITATION.cff`).
+The authors will publish a paper in 2027 and keep optimizing this pipeline. An **offline processing pipeline** (session replay → 2D/3D refine on the same bundle) is planned for a later release. This tree is the usable realtime software, not a results dump. Cite this repository until the preprint is up (`CITATION.cff`).
 
 ## What it does
 
@@ -54,6 +54,10 @@ Useful flags (passed through to `python3 -m app.route2.main`):
 | `--engine PATH` | TensorRT engine |
 
 SDK: `from app.sdk import RealtimeSession`. Session files: `docs/realtime/session-output.md`.
+
+## Roadmap
+
+- Offline processing on recorded sessions (same `session.mjpeg` / `session_pose.jsonl` contract), to be released after this realtime snapshot.
 
 ## Acknowledgments
 
