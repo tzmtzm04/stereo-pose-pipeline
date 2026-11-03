@@ -22,4 +22,4 @@ Work in progress. Cite this repository until the preprint is up (`CITATION.cff`)
 
 ## License
 
-Apache-2.0. Do not vendor GPL TensorRT-YOLO sources into this tree.
+Apache-2.0.
