@@ -1,20 +1,25 @@
 stereo-pose-pipeline
 Apache-2.0
 
-This tree does not vendor third-party sources listed below. Install them as
-runtime dependencies and follow their licenses.
+Acknowledgments (ideas and code we build on)
 
-Runtime / tools
+Vendored in this tree
+- Pose2Sim triangulation helpers in core/geometry/pose2sim_triangulation_core.py
+  Algorithm from Pose2Sim (David Pagnon), BSD-3-Clause.
+  https://github.com/perfanalytics/pose2sim
+
+Not vendored (runtime / weights / numerical reference)
 - NVIDIA CUDA, TensorRT, GStreamer NVMM, NvBuf/VIC: NVIDIA SDKs
 - OpenCV: Apache-2.0
 - NumPy: BSD
-- Ultralytics YOLO26-pose: see Ultralytics license
-  (https://github.com/ultralytics/ultralytics). This repo ships TensorRT
-  engines built from YOLO26n-pose for Jetson; .pt is not included.
+- Ultralytics YOLO26-pose weights and LetterBox geometry:
+  https://github.com/ultralytics/ultralytics
+  This repo ships TensorRT engines built from YOLO26n-pose; .pt is not included.
+- Geekgineer/YOLOs-CPP (AGPL-3.0): getScalePad / postprocessV26 used as the
+  numerical reference for letterbox unmap. This tree reimplements the mapping
+  in Python/CUDA and does not include YOLOs-CPP sources.
+  https://github.com/Geekgineer/YOLOs-CPP
+- One Euro Filter (Casiez, Roussel, Vogel): 2D keypoint smoothing
+- COCO-17 / COCO-WholeBody keypoint layout (Microsoft COCO)
 
-Numerical references (not copied into this repository)
-- Ultralytics LetterBox / OpenCV INTER_LINEAR geometry
-- Geekgineer/YOLOs-CPP getScalePad and postprocessV26 (AGPL-3.0 upstream;
-  this project reimplements the mapping in Python/CUDA)
-
-COCO-17 keypoint layout is used as the skeleton convention.
+Replace this camera's calib/stereo_sbs.json if you use a different stereo pair.

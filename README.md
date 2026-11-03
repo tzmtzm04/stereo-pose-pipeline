@@ -53,6 +53,11 @@ Useful flags (passed through to `python3 -m app.route2.main`):
 
 SDK: `from app.sdk import RealtimeSession`. Session files: `docs/realtime/session-output.md`.
 
+## Acknowledgments
+
+See `NOTICE`. In short: Pose2Sim triangulation (BSD, vendored core), Ultralytics YOLO26-pose and LetterBox, OpenCV, NVIDIA TensorRT/VIC, YOLOs-CPP as a numerical reference for unmap (not copied), One Euro Filter, COCO-17.
+
 ## License
 
 Apache-2.0. Third-party notices: `NOTICE`.
+
