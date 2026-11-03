@@ -2,7 +2,9 @@
 
 Real-time binocular 3D human pose from one side-by-side (SBS) camera stream.
 
-This is **v0.99**: a runnable Jetson snapshot. Each eye keeps the highest-confidence person (no identity tracking). A paper is in preparation; this tree is the software, not a results dump.
+This is **v0.99**: a runnable Jetson snapshot. Each eye keeps the highest-confidence person (no identity tracking).
+
+The authors will publish a paper in 2027 and keep optimizing this pipeline. This tree is the usable software, not a results dump. Cite this repository until the preprint is up (`CITATION.cff`).
 
 ## What it does
 

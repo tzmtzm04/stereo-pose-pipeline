@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: stereo-pose-pipeline
-message: Software snapshot v0.99. Cite this repository until a preprint is available.
+message: v0.99 software snapshot. Authors plan a 2027 paper and further optimization. Cite this repository until the preprint is available.
 type: software
 license: Apache-2.0
 repository-code: https://github.com/tzmtzm04/stereo-pose-pipeline
